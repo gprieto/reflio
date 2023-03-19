@@ -107,6 +107,7 @@ class rfl {
     if(Reflio.details().domains && Reflio.checkCookie() !== null){
       if(Reflio.details().domains?.includes(",")){
         document.querySelectorAll("[href]").forEach(link => {
+          try{
           let baseUrl = new URL(link.href);
 
           if(baseUrl.origin !== Reflio.details().rootDomain){
@@ -124,6 +125,10 @@ class rfl {
                 link.href = newUrl;
               }
             })
+          }
+          }
+          catch(e){
+          console.log(e)
           }
         });
       }
@@ -157,7 +162,7 @@ class rfl {
       
       if(trackImpression?.referral_details){
         //Set cookie
-        document.cookie = `reflioData=${JSON.stringify(trackImpression?.referral_details)}; expires=${trackImpression?.referral_details?.cookie_date}`;
+        document.cookie = `reflioData=${JSON.stringify(trackImpression?.referral_details)}; expires=${trackImpression?.referral_details?.cookie_date}; domain=peopletonotion.com`;
 
         Reflio.checkForOtherDomains();
       } else {
